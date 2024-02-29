@@ -1,0 +1,43 @@
+{
+  "name": "@janiscommerce/event-bridge-manager",
+  "version": "0.1.0",
+  "description": "A package to handle Events from Event Bridge in JANIS Services",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "mocha --exit -R nyan --require tests/bootstrap.js --recursive tests/ --no-deprecation",
+    "watch-test": "export TEST_ENV=true; mocha --exit -R nyan -w --recursive tests/ --no-deprecation",
+    "test-ci": "nyc --reporter=lcov --reporter=text-summary mocha --exit --recursive tests/ --no-deprecation",
+    "coverage": "nyc npm test",
+    "lint": "eslint lib/ tests/",
+    "prepare": "husky install",
+    "build-types": "tsc lib/index.js --declaration --allowJs --emitDeclarationOnly --outDir types",
+    "postpublish": "./.postpublish.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/janis-commerce/event-bridge-manager.git"
+  },
+  "author": "Janis",
+  "license": "ISC",
+  "homepage": "https://github.com/janis-commerce/event-bridge-managert#readme",
+  "devDependencies": {
+		"@types/node": "^18.18.6",
+		"eslint": "^8.52.0",
+		"eslint-config-airbnb-base": "^15.0.0",
+		"eslint-plugin-import": "^2.29.0",
+		"husky": "^8.0.3",
+		"mocha": "^10.0.0",
+		"mock-fs": "^5.1.1",
+		"nyc": "^15.1.0",
+		"sinon": "^17.0.0",
+		"typescript": "^5.2.2"
+  },
+  "files": [
+    "lib/",
+    "types/"
+  ],
+  "types": "types/index.d.ts",
+  "directories": {
+    "test": "tests"
+  }
+}
