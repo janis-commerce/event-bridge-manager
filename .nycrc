@@ -5,9 +5,6 @@
   "extension": [
     ".js"
   ],
-  "exclude": [
-    "lib/event-listener-handler/"
-  ],
   "cache": true,
   "all": true,
   "default-excludes": true,
