@@ -1,5 +1,7 @@
 'use strict';
 
+const testEventMaker = require('../../lib/testing-helper');
+
 const dateNow = new Date();
 
 const serviceName = 'JCN';
@@ -48,48 +50,32 @@ module.exports = {
 		'detail-type': eventData.name,
 		source: eventData.source
 	},
-	eventBridgeComplete: {
-		...awsBaseEvent,
-		'detail-type': eventData.name,
-		source: eventData.source,
-		detail: {
-			id: eventData.id,
-			dateCreated: eventData.dateCreated,
-			session: { clientCode },
-			body: {
-				...sampleOrder
-			}
-		}
-	},
-	eventBridgeWithoutSession: {
-		...awsBaseEvent,
-		'detail-type': eventData.name,
-		source: eventData.source,
-		detail: {
-			id: eventData.id,
-			dateCreated: eventData.dateCreated,
-			body: {
-				message: 'Janis will be closed until next Sunday'
-			}
-		}
-	},
-	eventBridgeWithoutBody: {
-		...awsBaseEvent,
-		'detail-type': eventData.name,
-		source: eventData.source,
-		detail: {
-			id: eventData.id,
-			dateCreated: eventData.dateCreated,
-			session: { clientCode }
-		}
-	},
-	eventBridgeWithoutBodyAndSession: {
-		...awsBaseEvent,
-		'detail-type': eventData.name,
-		source: eventData.source,
-		detail: {
-			id: eventData.id,
-			dateCreated: eventData.dateCreated
-		}
-	}
+	eventBridgeComplete: testEventMaker({
+		eventName: eventData.name,
+		eventSource: eventData.source,
+		eventId: eventData.id,
+		eventDateCreated: eventData.dateCreated,
+		body: { ...sampleOrder },
+		clientCode
+	}),
+	eventBridgeWithoutSession: testEventMaker({
+		eventName: eventData.name,
+		eventSource: eventData.source,
+		eventId: eventData.id,
+		eventDateCreated: eventData.dateCreated,
+		body: { message: 'Janis will be closed until next Sunday' }
+	}),
+	eventBridgeWithoutBody: testEventMaker({
+		eventName: eventData.name,
+		eventSource: eventData.source,
+		eventId: eventData.id,
+		eventDateCreated: eventData.dateCreated,
+		clientCode
+	}),
+	eventBridgeWithoutBodyAndSession: testEventMaker({
+		eventName: eventData.name,
+		eventSource: eventData.source,
+		eventId: eventData.id,
+		eventDateCreated: eventData.dateCreated
+	})
 };
