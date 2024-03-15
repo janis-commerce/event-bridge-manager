@@ -198,7 +198,8 @@ describe('EventEmitter', () => {
 				EventBusName: centralBusArn,
 				Detail: JSON.stringify({
 					id: sampleUuid,
-					dateCreated: dateNow
+					dateCreated: dateNow,
+					service: serviceName
 				})
 			});
 		});
@@ -222,6 +223,7 @@ describe('EventEmitter', () => {
 				Detail: JSON.stringify({
 					id: sampleUuid,
 					dateCreated: dateNow,
+					service: serviceName,
 					session: { clientCode }
 				})
 			});
@@ -252,6 +254,7 @@ describe('EventEmitter', () => {
 				Detail: JSON.stringify({
 					id: sampleUuid,
 					dateCreated: dateNow,
+					service: serviceName,
 					body: detail
 				})
 			});
@@ -283,6 +286,7 @@ describe('EventEmitter', () => {
 				Detail: JSON.stringify({
 					id: sampleUuid,
 					dateCreated: dateNow,
+					service: serviceName,
 					session: { clientCode },
 					body: detail
 				})
@@ -309,7 +313,8 @@ describe('EventEmitter', () => {
 				EventBusName: customBusArn,
 				Detail: JSON.stringify({
 					id: sampleUuid,
-					dateCreated: dateNow
+					dateCreated: dateNow,
+					service: serviceName
 				})
 			});
 		});
@@ -331,7 +336,8 @@ describe('EventEmitter', () => {
 				EventBusName: centralBusArn,
 				Detail: JSON.stringify({
 					id: sampleUuid,
-					dateCreated: dateNow
+					dateCreated: dateNow,
+					service: serviceName
 				})
 			});
 		});

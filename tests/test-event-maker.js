@@ -4,9 +4,9 @@ const assert = require('assert');
 const sinon = require('sinon');
 const crypto = require('crypto');
 
-const testEventMaker = require('../lib/testing-helper');
+const eventTestMaker = require('../lib/testing-helper');
 
-describe('TestEventMaker Function', () => {
+describe('eventTestMaker Function', () => {
 
 	let env;
 
@@ -32,7 +32,8 @@ describe('TestEventMaker Function', () => {
 
 	const detail = {
 		id: sampleUuid,
-		dateCreated: dateNow
+		dateCreated: dateNow,
+		service: 'default'
 	};
 
 	const eventBase = {
@@ -48,12 +49,12 @@ describe('TestEventMaker Function', () => {
 	};
 
 	it('Should return an event object with default values (event-id, event-name, event-dateCreated, event-source)', () => {
-		assert.deepStrictEqual(testEventMaker(), eventBase);
+		assert.deepStrictEqual(eventTestMaker(), eventBase);
 	});
 
 	it('Should return an event object with session and default values (event-id, event-name, event-dateCreated, event-source)', () => {
 
-		assert.deepStrictEqual(testEventMaker({
+		assert.deepStrictEqual(eventTestMaker({
 			clientCode: 'testing'
 		}), {
 			...eventBase,
@@ -66,7 +67,7 @@ describe('TestEventMaker Function', () => {
 
 	it('Should return an event object with body and default values (event-id, event-name, event-dateCreated, event-source)', () => {
 
-		assert.deepStrictEqual(testEventMaker({
+		assert.deepStrictEqual(eventTestMaker({
 			body: { message: 'it is a test' }
 		}), {
 			...eventBase,
@@ -81,7 +82,7 @@ describe('TestEventMaker Function', () => {
 
 		const dateCreated = new Date('2025-06-06T10:15:00.000Z');
 
-		assert.deepStrictEqual(testEventMaker({
+		assert.deepStrictEqual(eventTestMaker({
 			eventId: 'some-id',
 			eventDateCreated: dateCreated
 		}), {
@@ -89,14 +90,15 @@ describe('TestEventMaker Function', () => {
 			time: dateCreated,
 			detail: {
 				id: 'some-id',
-				dateCreated
+				dateCreated,
+				service: 'default'
 			}
 		});
 	});
 
 	it('Should return an event object with custom eventName and eventSource and default values (event-id, event-dateCreated)', () => {
 
-		assert.deepStrictEqual(testEventMaker({
+		assert.deepStrictEqual(eventTestMaker({
 			eventName: 'testFinished',
 			eventSource: 'janis.packages.testing'
 		}), {
@@ -104,6 +106,22 @@ describe('TestEventMaker Function', () => {
 			'detail-type': 'testFinished',
 			source: 'janis.packages.testing',
 			detail
+		});
+	});
+
+	it('Should return an event object with custom eventName and eventService and default values (event-id, event-dateCreated)', () => {
+
+		assert.deepStrictEqual(eventTestMaker({
+			eventName: 'testFinished',
+			eventService: 'random'
+		}), {
+			...eventBase,
+			'detail-type': 'testFinished',
+			source: 'janis.random.test',
+			detail: {
+				...detail,
+				service: 'random'
+			}
 		});
 	});
 });

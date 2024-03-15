@@ -1,6 +1,6 @@
 'use strict';
 
-const testEventMaker = require('../../lib/testing-helper');
+const eventTestMaker = require('../../lib/testing-helper');
 
 const dateNow = new Date();
 
@@ -12,7 +12,8 @@ const eventData = {
 	id: 'c7056eb7-e211-442a-9176-053a4eb092ee',
 	dateCreated: dateNow,
 	name: 'testExecuted',
-	source: `janis.${serviceName}.${envName}`
+	source: `janis.${serviceName}.${envName}`,
+	service: serviceName
 };
 
 const awsBaseEvent = {
@@ -50,31 +51,31 @@ module.exports = {
 		'detail-type': eventData.name,
 		source: eventData.source
 	},
-	eventBridgeComplete: testEventMaker({
+	eventBridgeComplete: eventTestMaker({
 		eventName: eventData.name,
-		eventSource: eventData.source,
+		eventService: eventData.service,
 		eventId: eventData.id,
 		eventDateCreated: eventData.dateCreated,
 		body: { ...sampleOrder },
 		clientCode
 	}),
-	eventBridgeWithoutSession: testEventMaker({
+	eventBridgeWithoutSession: eventTestMaker({
 		eventName: eventData.name,
-		eventSource: eventData.source,
+		eventService: eventData.service,
 		eventId: eventData.id,
 		eventDateCreated: eventData.dateCreated,
 		body: { message: 'Janis will be closed until next Sunday' }
 	}),
-	eventBridgeWithoutBody: testEventMaker({
+	eventBridgeWithoutBody: eventTestMaker({
 		eventName: eventData.name,
-		eventSource: eventData.source,
+		eventService: eventData.service,
 		eventId: eventData.id,
 		eventDateCreated: eventData.dateCreated,
 		clientCode
 	}),
-	eventBridgeWithoutBodyAndSession: testEventMaker({
+	eventBridgeWithoutBodyAndSession: eventTestMaker({
 		eventName: eventData.name,
-		eventSource: eventData.source,
+		eventService: eventData.service,
 		eventId: eventData.id,
 		eventDateCreated: eventData.dateCreated
 	})
